@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<hr>
+
+{% for object in object_list %}
+
+{% include 'update.html' %}
+
+{% endfor %}
+
+{% endblock %}

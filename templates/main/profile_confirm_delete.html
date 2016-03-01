@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="POST">
+   {% csrf_token %}
+    <h1>{{ object }}</h1>
+    <input class="btn btn-primary" type="submit" value="DELETE">
+</form>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% load staticfiles %}<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{% endblock %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+{% if request.user.is_authenticated %}
+  <div class="container">
+    <p class="navbar-brand"><a href="/" class="navbar-link">1Update</a></p>
+    <p class="navbar-text navbar-right"><a href="/profile/">{{ request.user }}</a> <a href="/accounts/logout/" class="navbar-link">Sign out</a></p>
+  </div>
+{% else %}
+  <div class="jumbotron">
+    <div class="container">
+      <p class="navbar-text navbar-right"><a href="/accounts/login/" class="navbar-link">Sign in</a></p>
+      <h1>1Update</h1>
+      <p><a class="btn btn-primary" href="/accounts/signup/" role="button">Share now</a></p>
+    </div>
+  </div>
+{% endif %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div> 
+
+  {% block js %}{% endblock %}
+
+</body>
+</html>

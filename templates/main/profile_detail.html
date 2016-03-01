@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<hr>
+
+{% include 'update.html' %}
+
+{% if request.user == object.user %}
+<div class="pull-right">
+  <p>
+    <a class="btn btn-primary" href="/profile/edit/">Edit</a>
+    <a class="btn btn-danger" href="/profile/delete/">Delete</a>
+  </p>
+</div>
+{% endif %}
+
+{% if object.image %}
+  <img src="{{ object.image.url }}" alt="">
+{% endif %}
+
+{% endblock %}

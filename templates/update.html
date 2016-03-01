@@ -1,0 +1,7 @@
+{% load tz static %}
+
+<p>
+  <small style="color: #9A9A9A;">{% localtime on %}{{ object.modified }}{% endlocaltime %} - </small>
+  <span style="font-size:200%;"><a href="/{{ object.id }}/">{{ object }}</a>: </span>
+  <span style="font-size:200%;">{{ object.update }}</span>
+</p>
