@@ -7,16 +7,25 @@ from .forms import ProfileForm
 from .models import Profile
 
 
+class SuccessUrlMixin(object):
+    """
+    Success URL dependepcy mixin.
+
+    Adds success_url for classes that accept POST.
+    """
+
+    success_url = reverse_lazy('home')
+
+
 class FormMixin(object):
     """
     Form dependepcy mixin.
 
-    Adds form_class and success_url for classes that accept POST.
+    Adds form_class for classes that accept POST.
     Modifies POST behavior to inject user data.
     """
 
     form_class = ProfileForm
-    success_url = reverse_lazy('home')
 
     def post(self, request, *args, **kwargs):
         post_data = request.POST.copy()  # because immutable
@@ -29,10 +38,9 @@ class ModelMixin(object):
     """
     Model dependency mixin.
 
-    Adds model to CBV.
-    Adds helper methods for user profile.
-    Modifies get_object method to return profile.
-    Modifies GET method to check whether user has or must create a new profile.
+    Adds model class and helper methods.
+    Overrides get_object method to return user instance.
+    Overrides GET method to check whether user has or must create a profile.
     """
 
     model = Profile
@@ -57,11 +65,11 @@ class ModelMixin(object):
         return self.get_profile()
 
 
-class ProfileCreateView(ModelMixin, FormMixin, CreateView):
+class ProfileCreateView(ModelMixin, FormMixin, SuccessUrlMixin, CreateView):
     """
-    Create view class which inherts model and form mixin behavior.
+    CreateView class that inherts model and form mixin behavior.
 
-    Modifies GET method to check whether user needs to login, view own profile, or create new profile.
+    Overrides GET method to check whether user needs to login, then view own profile or create new profile.
     """
 
     @method_decorator(login_required)  # so AnonymousUsers get redirected to signup instead of new profile
@@ -72,18 +80,18 @@ class ProfileCreateView(ModelMixin, FormMixin, CreateView):
 
 
 class ProfileDetailView(ModelMixin, DetailView):
-    """Detail view class which inherts model mixin behaviors."""
+    """DetailView class that inherts model mixin behaviors."""
 
     pass
 
 
-class ProfileUpdateView(ModelMixin, FormMixin, UpdateView):
-    """Update view class which inherts model and form mixin behaviors."""
+class ProfileUpdateView(ModelMixin, FormMixin, SuccessUrlMixin, UpdateView):
+    """UpdateView class that inherts model and form mixin behaviors."""
 
     pass
 
 
-class ProfileDeleteView(ModelMixin, DeleteView):
-    """Delete view class which inherts model mixin behavior."""
+class ProfileDeleteView(ModelMixin, SuccessUrlMixin, DeleteView):
+    """DeleteView class that inherts model mixin behavior."""
 
     pass

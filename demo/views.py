@@ -8,7 +8,7 @@ class SlugMixin(object):
 
 
 class ProfileListView(ListView):
-	"""Plain list view class which overrides get_queryset to return reordered queryset."""
+    """Plain list view class that overrides get_queryset to return reordered queryset."""
 
     model = Profile
 
@@ -18,7 +18,7 @@ class ProfileListView(ListView):
 
 
 class ProfileSlugDetailView(SlugMixin, ProfileDetailView, DetailView):
-	"""Detail view class which reverts to DetailView.get_object method."""
+    """Detail view class that reverts to DetailView.get_object instead of ModelMixin.get_object."""
 
     def get_object(self, **kwargs):
         return super(DetailView, self).get_object(**kwargs)

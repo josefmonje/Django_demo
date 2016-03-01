@@ -3,14 +3,14 @@
 
 {% block content %}
 
-<form class="form-horizontal" method="post">{% csrf_token %}
+<form class="form-horizontal" method="POST" enctype="multipart/form-data">{% csrf_token %}
     <fieldset>
         <legend>{{ title }}</legend>
         {% for field in form.visible_fields %}
             {% if field.errors %}
                 <div class="control-group error">
                     <label class="control-label">{{ field.label }}</label> 
-                    <div class="controls">{{ field }}
+                    <div class="controls">{{ field|add_class:"form-control" }}
                         <span class="help-inline">
                             {% for error in  field.errors %}{{ error }}{% endfor %}
                         </span>
